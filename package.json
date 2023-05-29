@@ -1,6 +1,7 @@
 {
   "name": "angular-pokedex",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,9 +9,15 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "tsc --noEmit && eslint . --ext js,ts,json --quiet --fix",
-    "format": "prettier src/**/*.ts --write"
+    "format": "prettier src/**/*.ts --write",
+    "prepare": "husky install "
   },
-  "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "git diff HEAD --quiet && npm run test && npm run lint"
+    }
+  },
   "dependencies": {
     "@angular/animations": "^15.0.0",
     "@angular/common": "^15.0.0",
@@ -33,12 +40,17 @@
     "@angular-eslint/template-parser": "15.2.1",
     "@angular/cli": "~15.0.3",
     "@angular/compiler-cli": "^15.0.0",
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-angular": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
     "@types/jasmine": "~4.3.0",
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
+    "commitizen": "^4.3.0",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
