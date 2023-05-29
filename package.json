@@ -10,13 +10,26 @@
     "test": "ng test",
     "lint": "tsc --noEmit && eslint . --ext js,ts,json --quiet --fix",
     "format": "prettier src/**/*.ts --write",
-    "prepare": "husky install "
+    "prepare": "husky install ",
+    "cz": "git-cz"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint",
+      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-push": "git diff HEAD --quiet && npm run test && npm run lint"
     }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "dependencies": {
     "@angular/animations": "^15.0.0",
@@ -47,6 +60,7 @@
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
     "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
